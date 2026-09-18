@@ -6,7 +6,7 @@
 <section class="detail-section"><div class="rfq-wrap">
 <div class="rfq-points"><div><strong>01 · Technical review</strong><span>Specification, quantity and standard review.</span></div><div><strong>02 · Sourcing</strong><span>Manufacturer and suitable model identification.</span></div><div><strong>03 · Commercial offer</strong><span>Pricing and lead time based on confirmed scope.</span></div></div>
 <form class="rfq-form" id="rfqForm">
-<div class="form-grid">
+<div class="form-grid"><div style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden"><label>Website</label><input name="website" tabindex="-1" autocomplete="off"></div>
 <div class="field"><label>Company *</label><input required name="company" placeholder="Company name"></div>
 <div class="field"><label>Contact person *</label><input required name="name" placeholder="Full name"></div>
 <div class="field"><label>Email *</label><input required type="email" name="email" placeholder="name@company.com"></div>
@@ -16,10 +16,8 @@
 <div class="field full"><label>Requirement / specification *</label><textarea required name="details" placeholder="Describe the product, manufacturer/model, quantity, technical specification, project or delivery requirement..."></textarea></div>
 <div class="field full"><label>Attachment</label><input type="file" name="file" accept=".pdf,.xlsx,.xls,.doc,.docx,.jpg,.jpeg,.png"></div>
 </div>
-<div class="form-actions"><button class="button primary" type="submit">Prepare RFQ →</button><span class="form-help">The form prepares an email draft. If you select a file, attach it to the email before sending. Automated RFQ processing will be connected in the next stage.</span></div>
+<div class="form-actions"><button class="button primary" type="submit">Submit RFQ →</button><span class="form-help">The form prepares an email draft. If you select a file, attach it to the email before sending. Automated RFQ processing will be connected in the next stage.</span></div>
 <div class="success" id="success">Your RFQ email draft has been prepared. Please review the attachment and send the email.</div>
 </form></div></section></main>
 <footer><div class="footer-logo">ENER<span>V</span>IA</div><p>Energy & Industrial Solutions</p><p>© 2026 Enervia. All rights reserved.</p></footer>
-<script>
-document.getElementById('rfqForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);const subject=encodeURIComponent('RFQ | '+(f.get('company')||'')+' | Enervia');const body=encodeURIComponent('Company: '+f.get('company')+'\nContact: '+f.get('name')+'\nEmail: '+f.get('email')+'\nPhone: '+f.get('phone')+'\nIndustry: '+f.get('industry')+'\nRequirement type: '+f.get('type')+'\n\nRequirement / specification:\n'+f.get('details')+'\n\nAttachment: '+(f.get('file')?.name||'None'));window.location.href='mailto:sales@enervia.az?subject='+subject+'&body='+body;document.getElementById('success').style.display='block';});
-</script></body></html>
+<script>document.getElementById("rfqForm").addEventListener("submit",async e=>{e.preventDefault();const form=e.target,btn=form.querySelector("button[type=submit]"),success=document.getElementById("success");btn.disabled=true;btn.textContent="Sending...";success.style.display="none";try{const r=await fetch("/api/rfq",{method:"POST",body:new FormData(form)});const data=await r.json();if(!r.ok||!data.ok)throw new Error(data.error||"Submission failed");success.textContent="RFQ "+data.rfqId+" has been submitted successfully. Our team will review your requirement and contact you.";success.style.display="block";form.reset()}catch(err){success.textContent=err.message||"We could not send the RFQ. Please try again.";success.style.display="block"}finally{btn.disabled=false;btn.textContent="Submit RFQ ->"}});</script></body></html>
