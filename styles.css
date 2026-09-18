@@ -79,3 +79,32 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .product-item{min-height:108px}
 .product-item h3{letter-spacing:-.3px}
 @media(max-width:800px){.product-item{min-height:0;padding-top:24px;padding-bottom:24px}}
+
+/* DETAIL PAGES */
+.inner-hero{min-height:680px;padding:180px 7% 110px;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 78% 42%,rgba(33,132,132,.2),transparent 30%),linear-gradient(135deg,#071018,#0a1b25);position:relative;overflow:hidden}
+.inner-hero:after{content:"";position:absolute;right:-120px;bottom:-220px;width:500px;height:500px;border:1px solid rgba(69,215,196,.12);border-radius:50%}
+.inner-hero h1{max-width:900px;font-size:clamp(52px,7vw,92px);line-height:1;letter-spacing:-4px}
+.inner-hero h1 span,.page-cta h2 span,.azerbaijan-reference h2 span{display:block;color:#45d7c4}
+.inner-hero p{max-width:680px;margin-top:32px;color:#9baab3;font-size:17px;line-height:1.8}
+.detail-section{padding:125px 7%;background:#09151e}
+.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:1180px}
+.detail-card{min-height:340px;padding:36px;background:linear-gradient(145deg,#0d1d28,#0a1720);border:1px solid #1d313c;position:relative;overflow:hidden;transition:.3s}
+.detail-card:hover{transform:translateY(-6px);border-color:#45d7c4}
+.detail-card>span{color:#45d7c4;font-size:12px}
+.detail-card h3{font-size:28px;line-height:1.15;margin:42px 0 15px}
+.detail-card p{color:#8f9ea7;font-size:14px;line-height:1.75;max-width:560px}
+.detail-card ul{list-style:none;margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:9px;color:#a9b6bd;font-size:12px}
+.detail-card li:before{content:"—";color:#45d7c4;margin-right:8px}
+.process-section{padding:125px 7%}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #263942;border-bottom:1px solid #263942}
+.process-grid>div{padding:34px 28px;border-right:1px solid #263942}
+.process-grid>div:last-child{border-right:0}
+.process-grid b{color:#45d7c4;font-size:12px}.process-grid h3{font-size:21px;margin:25px 0 10px}.process-grid p{color:#84949d;font-size:13px;line-height:1.7}
+.page-cta{padding:120px 7%;text-align:center;background:#45d7c4;color:#071018}
+.page-cta .eyebrow{color:#071018}.page-cta h2{font-size:clamp(42px,5vw,68px);line-height:1.05;margin-bottom:20px}.page-cta p{max-width:600px;margin:0 auto 30px}.page-cta .primary{background:#071018;color:#fff}
+.azerbaijan-reference{padding:120px 7%;display:grid;grid-template-columns:1fr 1fr;gap:80px;background:#0a1821}
+.azerbaijan-reference h2{font-size:clamp(40px,5vw,64px);line-height:1.05;letter-spacing:-2px}
+.azerbaijan-reference p{color:#9aa9b1;font-size:15px;line-height:1.8;margin-bottom:22px;max-width:580px}
+.industries-detail .detail-card{min-height:280px}
+@media(max-width:900px){.detail-grid{grid-template-columns:1fr}.process-grid{grid-template-columns:repeat(2,1fr)}.process-grid>div:nth-child(2){border-right:0}.process-grid>div{border-bottom:1px solid #263942}.azerbaijan-reference{grid-template-columns:1fr;gap:35px}}
+@media(max-width:600px){.inner-hero{min-height:620px;padding-top:145px}.inner-hero h1{font-size:48px;letter-spacing:-2px}.detail-section,.process-section{padding:90px 7%}.detail-card{min-height:0;padding:30px}.detail-card h3{font-size:24px;margin-top:30px}.detail-card ul{grid-template-columns:1fr}.process-grid{grid-template-columns:1fr}.process-grid>div{border-right:0!important}.azerbaijan-reference{padding:90px 7%}}
