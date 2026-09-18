@@ -24,33 +24,20 @@ function clean(v, max = 5000) {
 
 export default async function handler(req, res) {
   const origin = req.headers.origin || "";
-  const referer = req.headers.referer || "";
-  const host = String(req.headers.host || "").split(":")[0].toLowerCase();
-  const sameOrigin = !!origin && origin === `https://${host}`;
   const allowedOrigins = new Set(["https://enervia.az", "https://www.enervia.az"]);
-
-  if (allowedOrigins.has(origin) || sameOrigin) {
+  if (allowedOrigins.has(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", "false");
   res.setHeader("Vary", "Origin");
 
   if (req.method === "OPTIONS") return res.status(204).end();
   if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Method not allowed" });
 
-  if (origin && !allowedOrigins.has(origin) && !sameOrigin) {
+  if (origin && !allowedOrigins.has(origin)) {
     return res.status(403).json({ ok: false, error: "Forbidden origin" });
-  }
-
-  if (referer) {
-    const refererAllowed =
-      /^https:\/\/(www\.)?enervia\.az\//i.test(referer) ||
-      (host && new URL(referer).hostname.toLowerCase() === host);
-
-    if (!refererAllowed) {
-      return res.status(403).json({ ok: false, error: "Forbidden origin" });
-    }
   }
 
   const ip = String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "unknown").split(",")[0].trim();
