@@ -68,17 +68,20 @@ export default async function handler(req, res) {
     maxFiles: 1,
     maxFileSize: MAX_FILE_SIZE,
     allowEmptyFiles: true,
-    keepExtensions: true
+    keepExtensions: true,
+    filter: ({ originalFilename }) => !originalFilename || originalFilename.length > 0
   });
 
   let fields, files;
   try {
     [fields, files] = await form.parse(req);
-  } catch {
-    return res.status(400).json({
-      ok: false,
-      error: "The submission could not be processed. Check the file size and try again."
-    });
+  } catch (e) {
+    console.error("RFQ multipart parse error", e);
+    const message = String(e?.message || "");
+    if (/maxFileSize|larger than|maxFiles|too many files/i.test(message)) {
+      return res.status(400).json({ ok: false, error: "The attachment is too large or more than one file was selected. Maximum size is 10 MB." });
+    }
+    return res.status(400).json({ ok: false, error: "The RFQ form data could not be read. Please try again without an attachment." });
   }
 
   if (clean(fields.website, 200)) return res.status(200).json({ ok: true });
