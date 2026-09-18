@@ -72,3 +72,10 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .contact-section:before,.contact-section:after{content:"";position:absolute;border:1px solid rgba(69,215,196,.12);border-radius:50%;pointer-events:none}
 .contact-section:before{width:420px;height:420px;left:-210px;top:30px}.contact-section:after{width:300px;height:300px;right:-150px;bottom:-100px}
 @media(max-width:800px){.hero{min-height:860px}.hero:after{left:7%;right:7%;bottom:30px}.about-section:after{font-size:90px;right:-15px;bottom:-30px}}
+
+/* PRODUCT SECTION POLISH */
+.products-section .section-heading{display:flex;flex-direction:column}
+.product-list{max-width:1120px}
+.product-item{min-height:108px}
+.product-item h3{letter-spacing:-.3px}
+@media(max-width:800px){.product-item{min-height:0;padding-top:24px;padding-bottom:24px}}
