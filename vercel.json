@@ -1,7 +1,6 @@
 {
   "functions": {
     "api/rfq.js": {
-      "memory": 512,
       "maxDuration": 20
     }
   }
