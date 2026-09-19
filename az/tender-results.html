@@ -36,41 +36,44 @@
 <footer><div class="footer-logo">ENER<span>V</span>IA</div><p>Enerji və Sənaye Həlləri</p><p>© 2026 Enervia. Bütün hüquqlar qorunur.</p></footer>
 <script>
 let all=[];
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const cleanDate=s=>String(s??'').trim();
-const getYear=s=>{const m=cleanDate(s).match(/(\\d{2})\\.(\\d{2})\\.(\\d{4})/);return m?m[3]:''};
-const numValue=s=>{const v=String(s??'').replace(/[^0-9.,-]/g,'').replace(/,/g,'');return Number(v)||0};
-function render(){
- const q=document.querySelector('#search').value.trim().toLowerCase();
- const y=document.querySelector('#year').value;
- const s=document.querySelector('#source').value;
- const rows=all.filter(x=>{
-   const buyer=String(x.buyer??'');
-   const subject=String(x.subject??x.tender??x.title??'');
-   const winner=String(x.winner??'');
-   return (!q||(buyer+' '+subject+' '+winner).toLowerCase().includes(q))&&(!y||getYear(x.date??x.resultDate)===y)&&(!s||String(x.source??'')===s);
- });
- document.querySelector('#rows').innerHTML=rows.length?rows.map((x,i)=>{
-   const subject=x.subject??x.tender??x.title??'';
-   const amount=x.amount??x.value??x.price??'';
-   const date=x.date??x.resultDate??'';
-   const source=x.sourceUrl??x.url??'https://etender.gov.az/main/competitions?tabEventType=2';
-   return '<tr><td>'+(i+1)+'</td><td><strong>'+esc(x.buyer)+'</strong></td><td>'+esc(subject)+'</td><td class="winner">'+esc(x.winner)+'</td><td class="amount">'+esc(amount)+'</td><td>'+esc(date)+'</td><td><a href="'+esc(source)+'" target="_blank" rel="noopener">eTender ↗</a></td></tr>';
- }).join(''):'<tr><td colspan="7" class="tender-empty">Nəticə tapılmadı.</td></tr>';
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});
+function getYear(s){
+  const parts=String(s||'').trim().split(' ');
+  const d=(parts[0]||'').split('.');
+  return d.length===3?d[2]:'';
 }
-fetch('/data/tender-results.json',{cache:'no-store'})
- .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
- .then(data=>{
-   all=Array.isArray(data)?data:[];
-   const years=[...new Set(all.map(x=>getYear(x.date??x.resultDate)).filter(Boolean))].sort().reverse();
-   document.querySelector('#year').innerHTML='<option value="">Bütün illər</option>'+years.map(y=>'<option value="'+y+'">'+y+'</option>').join('');
-   document.querySelector('#count').textContent=all.length;
-   document.querySelector('#updated').textContent=all[0]?.date??all[0]?.resultDate??'—';
-   const total=all.reduce((sum,x)=>sum+numValue(x.amount??x.value??x.price),0);
-   document.querySelector('#total').textContent=total.toLocaleString('az-AZ',{minimumFractionDigits:2,maximumFractionDigits:2})+' AZN';
-   render();
- })
- .catch(err=>{console.error('Tender data load error',err);document.querySelector('#rows').innerHTML='<tr><td colspan="7" class="tender-empty">Məlumat yüklənmədi.</td></tr>';});
-['search','year','source'].forEach(id=>document.getElementById(id).addEventListener('input',render));
-</script>>
+function getSubject(x){return x.subject||x.tender||x.title||'';}
+function getAmount(x){return x.amount||x.value||x.price||'';}
+function getDate(x){return x.date||x.resultDate||'';}
+function getSourceUrl(x){return x.sourceUrl||x.url||'https://etender.gov.az/main/competitions?tabEventType=2';}
+function render(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  const y=document.getElementById('year').value;
+  const s=document.getElementById('source').value;
+  const rows=all.filter(function(x){
+    const text=[x.buyer,getSubject(x),x.winner].join(' ').toLowerCase();
+    return (!q||text.indexOf(q)!==-1)&&(!y||getYear(getDate(x))===y)&&(!s||String(x.source||'')===s);
+  });
+  document.getElementById('rows').innerHTML=rows.length?rows.map(function(x,i){
+    return '<tr><td>'+ (i+1) +'</td><td><strong>'+esc(x.buyer)+'</strong></td><td>'+esc(getSubject(x))+'</td><td class="winner">'+esc(x.winner)+'</td><td class="amount">'+esc(getAmount(x))+'</td><td>'+esc(getDate(x))+'</td><td><a href="'+esc(getSourceUrl(x))+'" target="_blank" rel="noopener">eTender ↗</a></td></tr>';
+  }).join(''):'<tr><td colspan="7" class="tender-empty">Nəticə tapılmadı.</td></tr>';
+}
+fetch('/data/tender-results.json?ts='+Date.now(),{cache:'no-store'})
+.then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+.then(function(data){
+  all=Array.isArray(data)?data:[];
+  const years=Array.from(new Set(all.map(function(x){return getYear(getDate(x));}).filter(Boolean))).sort().reverse();
+  document.getElementById('year').innerHTML='<option value="">Bütün illər</option>'+years.map(function(y){return '<option value="'+y+'">'+y+'</option>';}).join('');
+  document.getElementById('count').textContent=all.length;
+  document.getElementById('updated').textContent=all.length?getDate(all[0]):'—';
+  let total=0;
+  all.forEach(function(x){const n=String(getAmount(x)).replace(/[^0-9.]/g,''); total+=Number(n)||0;});
+  document.getElementById('total').textContent=total.toLocaleString('az-AZ',{minimumFractionDigits:2,maximumFractionDigits:2})+' AZN';
+  render();
+})
+.catch(function(err){console.error(err);document.getElementById('rows').innerHTML='<tr><td colspan="7" class="tender-empty">Məlumat yüklənmədi.</td></tr>';});
+document.getElementById('search').addEventListener('input',render);
+document.getElementById('year').addEventListener('change',render);
+document.getElementById('source').addEventListener('change',render);
+</script>>>
 </body></html>
