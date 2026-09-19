@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Enervia | Qalib gəldiyimiz tenderlər</title>
-<meta name="description" content="Enervia-nın eTender platformasında qalib elan olunduğu satınalmalar və tender nəticələri.">
+<title>Enervia | Tender Results & Awards</title>
+<meta name="description" content="Enervia tender and procurement results, including awards where Enervia was declared the winner.">
 <link rel="canonical" href="https://www.enervia.az/tender-results.html">
 <link rel="alternate" hreflang="az-AZ" href="https://www.enervia.az/az/tender-results.html">
 <link rel="alternate" hreflang="en-AZ" href="https://www.enervia.az/tender-results.html">
@@ -21,28 +21,28 @@
 </head>
 <body>
 <header class="navbar"><a href="index.html" class="logo">ENER<span>V</span>IA</a><nav class="navigation">
-<a href="solutions.html">Həllər</a><a href="industries.html">Sənayelər</a><a href="products.html">Məhsullar</a><a href="index.html#about">Haqqımızda</a><a href="projects.html">Layihələr</a><a href="index.html#contact">Əlaqə</a><a href="az/tender-results.html" class="lang">AZ</a>
-</nav><a href="rfq.html" class="nav-button">Sorğu göndər</a></header>
+<a href="solutions.html">Solutions</a><a href="industries.html">Industries</a><a href="products.html">Products</a><a href="index.html#about">About Us</a><a href="projects.html">Projects</a><a href="index.html#contact">Contact</a><a href="az/tender-results.html" class="lang">AZ</a>
+</nav><a href="rfq.html" class="nav-button">Send an RFQ</a></header>
 <main>
-<section class="tender-hero"><div class="eyebrow">ENERVIA · TENDER NƏTİCƏLƏRİ</div><h1>Qalib gəldiyimiz <span>tenderlər.</span></h1><p>Dövlət və özəl sektorda qalib elan olunduğumuz satınalmaları vahid səhifədə təqdim edirik. Məlumatlar rəsmi satınalma mənbəyindən götürülür və yeni nəticələr əlavə olunduqca yenilənir.</p></section>
+<section class="tender-hero"><div class="eyebrow">ENERVIA · TENDER RESULTS</div><h1>Tenders we have <span>won.</span></h1><p>We present procurement and tender awards where Enervia has been declared the winner. Results are sourced from the official procurement platform and the database is designed to be updated as new awards are published.</p></section>
 <section class="tender-section">
-<div class="tender-stats"><div class="tender-stat"><strong id="count">—</strong><span>Qalib tender</span></div><div class="tender-stat"><strong id="total">—</strong><span>Göstərilən məbləğ</span></div><div class="tender-stat"><strong id="updated">—</strong><span>Son yenilənmə</span></div></div>
-<div class="tender-toolbar"><input id="search" placeholder="Müştəri və ya tender üzrə axtarış"><select id="year"><option value="">Bütün illər</option></select><select id="source"><option value="">Bütün mənbələr</option><option value="eTender">eTender</option></select></div>
-<div class="tender-table-wrap"><table class="tender-table"><thead><tr><th>#</th><th>Müştəri</th><th>Tender / satınalma</th><th>Qalib</th><th>Məbləğ</th><th>Tarix</th><th>Mənbə</th></tr></thead><tbody id="rows"></tbody></table></div>
-<p class="tender-note">Qeyd: Bu səhifədə yalnız Enervia-nın qalib elan olunduğu nəticələr təqdim olunur. Rəsmi elan və nəticə məlumatı üçün mənbə keçidindən istifadə edin.</p>
+<div class="tender-stats"><div class="tender-stat"><strong id="count">—</strong><span>Winning tenders</span></div><div class="tender-stat"><strong id="total">—</strong><span>Displayed value</span></div><div class="tender-stat"><strong id="updated">—</strong><span>Latest result date</span></div></div>
+<div class="tender-toolbar"><input id="search" placeholder="Search by buyer or tender"><select id="year"><option value="">All years</option></select><select id="source"><option value="">All sources</option><option value="eTender">eTender</option></select></div>
+<div class="tender-table-wrap"><table class="tender-table"><thead><tr><th>#</th><th>Buyer</th><th>Tender / Procurement</th><th>Winner</th><th>Value</th><th>Date</th><th>Source</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="tender-note">Note: This page presents procurement results where Enervia is listed as the winner. Use the source link for the official procurement announcement and result information.</p>
 </section>
-<section class="tender-cta"><div class="eyebrow">LAYİHƏ ÜZRƏ TƏCHİZAT</div><h2>Sizin tenderiniz üçün də texniki təchizat dəstəyi.</h2><p>BOQ, texniki spesifikasiya və ya satınalma tələbinizi göndərin. Enervia məhsul araşdırması, istehsalçı seçimi və təchizat üzrə dəstək göstərə bilər.</p><a href="rfq.html" class="button">RFQ göndərin →</a></section>
+<section class="tender-cta"><div class="eyebrow">PROJECT PROCUREMENT</div><h2>Technical supply support for your next tender.</h2><p>Send us your BOQ, technical specification or procurement requirement. Enervia can support product research, manufacturer selection and project supply.</p><a href="rfq.html" class="button">Send an RFQ →</a></section>
 </main>
-<footer><div class="footer-logo">ENER<span>V</span>IA</div><p>Enerji və Sənaye Həlləri</p><p>© 2026 Enervia. Bütün hüquqlar qorunur.</p></footer>
+<footer><div class="footer-logo">ENER<span>V</span>IA</div><p>Energy & Industrial Solutions</p><p>© 2026 Enervia. All rights reserved.</p></footer>
 <script>
 let all=[];
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function render(){
  const q=document.querySelector('#search').value.toLowerCase(), y=document.querySelector('#year').value, s=document.querySelector('#source').value;
  const rows=all.filter(x=>(!q||[x.buyer,x.subject,x.winner].join(' ').toLowerCase().includes(q))&&(!y||x.date.includes(y))&&(!s||x.source===s));
- document.querySelector('#rows').innerHTML=rows.length?rows.map((x,i)=>'<tr><td>'+ (i+1) +'</td><td><strong>'+esc(x.buyer)+'</strong></td><td>'+esc(x.subject)+'</td><td class="winner">'+esc(x.winner)+'</td><td class="amount">'+esc(x.amount)+'</td><td>'+esc(x.date)+'</td><td><a href="'+esc(x.sourceUrl)+'" target="_blank" rel="noopener">eTender ↗</a></td></tr>').join(''):'<tr><td colspan="7" class="tender-empty">Nəticə tapılmadı.</td></tr>';
+ document.querySelector('#rows').innerHTML=rows.length?rows.map((x,i)=>'<tr><td>'+ (i+1) +'</td><td><strong>'+esc(x.buyer)+'</strong></td><td>'+esc(x.subject)+'</td><td class="winner">'+esc(x.winner)+'</td><td class="amount">'+esc(x.amount)+'</td><td>'+esc(x.date)+'</td><td><a href="'+esc(x.sourceUrl)+'" target="_blank" rel="noopener">eTender ↗</a></td></tr>').join(''):'<tr><td colspan="7" class="tender-empty">No results found.</td></tr>';
 }
-fetch('/data/tender-results.json').then(r=>r.json()).then(data=>{all=data;const years=[...new Set(data.map(x=>x.date.slice(-4)))].sort().reverse();document.querySelector('#year').innerHTML='<option value="">Bütün illər</option>'+years.map(y=>'<option>'+y+'</option>').join('');document.querySelector('#count').textContent=data.length;document.querySelector('#updated').textContent=data[0]?.date?.slice(0,10)||'—';const nums=data.map(x=>Number(String(x.amount).replace(/[^0-9.,]/g,'').replace(/,/g,''))).filter(Boolean);document.querySelector('#total').textContent=nums.reduce((a,b)=>a+b,0).toLocaleString('az-AZ',{minimumFractionDigits:2,maximumFractionDigits:2})+' AZN';render();}).catch(()=>{document.querySelector('#rows').innerHTML='<tr><td colspan="7" class="tender-empty">Məlumat yüklənmədi.</td></tr>';});
+fetch('/data/tender-results.json').then(r=>r.json()).then(data=>{all=data;const years=[...new Set(data.map(x=>x.date.slice(-4)))].sort().reverse();document.querySelector('#year').innerHTML='<option value="">All years</option>'+years.map(y=>'<option>'+y+'</option>').join('');document.querySelector('#count').textContent=data.length;document.querySelector('#updated').textContent=data[0]?.date?.slice(0,10)||'—';const nums=data.map(x=>Number(String(x.amount).replace(/[^0-9.,]/g,'').replace(/,/g,''))).filter(Boolean);document.querySelector('#total').textContent=nums.reduce((a,b)=>a+b,0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' AZN';render();}).catch(()=>{document.querySelector('#rows').innerHTML='<tr><td colspan="7" class="tender-empty">Data could not be loaded.</td></tr>';});
 ['search','year','source'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 </script>
 </body></html>
