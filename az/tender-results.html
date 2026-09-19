@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Enervia | Qalib gəldiyimiz tenderlər</title>
+<meta name="description" content="Enervia-nın eTender platformasında qalib elan olunduğu satınalmalar və tender nəticələri.">
+<link rel="canonical" href="https://www.enervia.az/az/tender-results.html">
+<link rel="alternate" hreflang="az-AZ" href="https://www.enervia.az/az/tender-results.html">
+<link rel="alternate" hreflang="en-AZ" href="https://www.enervia.az/tender-results.html">
+<link rel="stylesheet" href="../styles.css">
+<style>
+.tender-hero{padding:125px 7% 80px;background:linear-gradient(90deg,#071018 0%,#102d35 55%,#0c2029 100%);color:#fff}
+.tender-hero h1{font-size:clamp(48px,7vw,88px);line-height:.98;letter-spacing:-3px;max-width:900px}
+.tender-hero h1 span{display:block;color:#45d7c4}.tender-hero p{max-width:720px;color:#aebcc3;line-height:1.8;margin-top:25px}
+.tender-section{padding:85px 7%;background:#f5f8f9}.tender-toolbar{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 25px}.tender-toolbar input,.tender-toolbar select{padding:13px 15px;border:1px solid #d9e2e6;background:#fff;border-radius:4px;color:#203645;min-width:190px}
+.tender-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}.tender-stat{background:#fff;border:1px solid #e1e8eb;padding:22px}.tender-stat strong{display:block;font-size:30px;color:#102b3d}.tender-stat span{font-size:12px;color:#71818a}
+.tender-table-wrap{overflow:auto;background:#fff;border:1px solid #dfe7ea}.tender-table{width:100%;border-collapse:collapse;min-width:950px}.tender-table th,.tender-table td{text-align:left;padding:16px 14px;border-bottom:1px solid #e7edef;vertical-align:top;font-size:12px}.tender-table th{background:#eef5f6;color:#50636d;font-size:10px;letter-spacing:1px;text-transform:uppercase}.tender-table td strong{color:#102b3d}.winner{color:#0d897d;font-weight:800}.amount{font-weight:800;white-space:nowrap}.tender-note{margin-top:18px;color:#75848b;font-size:12px;line-height:1.7}.tender-empty{padding:35px;text-align:center;color:#71818a}
+.tender-cta{padding:75px 7%;background:#45d7c4;color:#071018}.tender-cta h2{font-size:clamp(38px,5vw,60px);max-width:800px}.tender-cta p{max-width:700px;line-height:1.8}.tender-cta .button{background:#071018;color:#fff}
+@media(max-width:700px){.tender-stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="navbar"><a href="index.html" class="logo">ENER<span>V</span>IA</a><nav class="navigation">
+<a href="solutions.html">Həllər</a><a href="industries.html">Sənayelər</a><a href="products.html">Məhsullar</a><a href="index.html#about">Haqqımızda</a><a href="projects.html">Layihələr</a><a href="index.html#contact">Əlaqə</a><a href="../tender-results.html" class="lang">AZ</a>
+</nav><a href="rfq.html" class="nav-button">Sorğu göndər</a></header>
+<main>
+<section class="tender-hero"><div class="eyebrow">ENERVIA · TENDER NƏTİCƏLƏRİ</div><h1>Qalib gəldiyimiz <span>tenderlər.</span></h1><p>Dövlət və özəl sektorda qalib elan olunduğumuz satınalmaları vahid səhifədə təqdim edirik. Məlumatlar rəsmi satınalma mənbəyindən götürülür və yeni nəticələr əlavə olunduqca yenilənir.</p></section>
+<section class="tender-section">
+<div class="tender-stats"><div class="tender-stat"><strong id="count">—</strong><span>Qalib tender</span></div><div class="tender-stat"><strong id="total">—</strong><span>Göstərilən məbləğ</span></div><div class="tender-stat"><strong id="updated">—</strong><span>Son yenilənmə</span></div></div>
+<div class="tender-toolbar"><input id="search" placeholder="Müştəri və ya tender üzrə axtarış"><select id="year"><option value="">Bütün illər</option></select><select id="source"><option value="">Bütün mənbələr</option><option value="eTender">eTender</option></select></div>
+<div class="tender-table-wrap"><table class="tender-table"><thead><tr><th>#</th><th>Müştəri</th><th>Tender / satınalma</th><th>Qalib</th><th>Məbləğ</th><th>Tarix</th><th>Mənbə</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="tender-note">Qeyd: Bu səhifədə yalnız Enervia-nın qalib elan olunduğu nəticələr təqdim olunur. Rəsmi elan və nəticə məlumatı üçün mənbə keçidindən istifadə edin.</p>
+</section>
+<section class="tender-cta"><div class="eyebrow">LAYİHƏ ÜZRƏ TƏCHİZAT</div><h2>Sizin tenderiniz üçün də texniki təchizat dəstəyi.</h2><p>BOQ, texniki spesifikasiya və ya satınalma tələbinizi göndərin. Enervia məhsul araşdırması, istehsalçı seçimi və təchizat üzrə dəstək göstərə bilər.</p><a href="rfq.html" class="button">RFQ göndərin →</a></section>
+</main>
+<footer><div class="footer-logo">ENER<span>V</span>IA</div><p>Enerji və Sənaye Həlləri</p><p>© 2026 Enervia. Bütün hüquqlar qorunur.</p></footer>
+<script>
+let all=[];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function render(){
+ const q=document.querySelector('#search').value.toLowerCase(), y=document.querySelector('#year').value, s=document.querySelector('#source').value;
+ const rows=all.filter(x=>(!q||[x.buyer,x.subject,x.winner].join(' ').toLowerCase().includes(q))&&(!y||x.date.includes(y))&&(!s||x.source===s));
+ document.querySelector('#rows').innerHTML=rows.length?rows.map((x,i)=>'<tr><td>'+ (i+1) +'</td><td><strong>'+esc(x.buyer)+'</strong></td><td>'+esc(x.subject)+'</td><td class="winner">'+esc(x.winner)+'</td><td class="amount">'+esc(x.amount)+'</td><td>'+esc(x.date)+'</td><td><a href="'+esc(x.sourceUrl)+'" target="_blank" rel="noopener">eTender ↗</a></td></tr>').join(''):'<tr><td colspan="7" class="tender-empty">Nəticə tapılmadı.</td></tr>';
+}
+fetch('/data/tender-results.json').then(r=>r.json()).then(data=>{all=data;const years=[...new Set(data.map(x=>x.date.slice(-4)))].sort().reverse();document.querySelector('#year').innerHTML='<option value="">Bütün illər</option>'+years.map(y=>'<option>'+y+'</option>').join('');document.querySelector('#count').textContent=data.length;document.querySelector('#updated').textContent=data[0]?.date?.slice(0,10)||'—';const nums=data.map(x=>Number(String(x.amount).replace(/[^0-9.,]/g,'').replace(/,/g,''))).filter(Boolean);document.querySelector('#total').textContent=nums.reduce((a,b)=>a+b,0).toLocaleString('az-AZ',{minimumFractionDigits:2,maximumFractionDigits:2})+' AZN';render();}).catch(()=>{document.querySelector('#rows').innerHTML='<tr><td colspan="7" class="tender-empty">Məlumat yüklənmədi.</td></tr>';});
+['search','year','source'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+</script>
+</body></html>
