@@ -14,7 +14,7 @@
 .tender-hero h1 span{display:block;color:#45d7c4}.tender-hero p{max-width:720px;color:#aebcc3;line-height:1.8;margin-top:25px}
 .tender-section{padding:85px 7%;background:#f5f8f9}.tender-toolbar{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 25px}.tender-toolbar input,.tender-toolbar select{padding:13px 15px;border:1px solid #d9e2e6;background:#fff;border-radius:4px;color:#203645;min-width:190px}
 .tender-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}.tender-stat{background:#fff;border:1px solid #e1e8eb;padding:22px}.tender-stat strong{display:block;font-size:30px;color:#102b3d}.tender-stat span{font-size:12px;color:#71818a}
-.tender-table-wrap{overflow:auto;background:#fff;border:1px solid #dfe7ea}.tender-table{width:100%;border-collapse:collapse;min-width:950px}.tender-table th,.tender-table td{text-align:left;padding:16px 14px;border-bottom:1px solid #e7edef;vertical-align:top;font-size:12px}.tender-table th{background:#eef5f6;color:#50636d;font-size:10px;letter-spacing:1px;text-transform:uppercase}.tender-table td strong{color:#102b3d}.winner{color:#0d897d;font-weight:800}.amount{font-weight:800;white-space:nowrap}.tender-note{margin-top:18px;color:#75848b;font-size:12px;line-height:1.7}.tender-empty{padding:35px;text-align:center;color:#71818a}
+.tender-table-wrap{overflow:auto;background:#fff;border:1px solid #dfe7ea}.tender-table{width:100%;border-collapse:collapse;min-width:950px}.tender-table th,.tender-table td{text-align:left;color:#203645;padding:16px 14px;border-bottom:1px solid #e7edef;vertical-align:top;font-size:12px}.tender-table th{background:#eef5f6;color:#50636d;font-size:10px;letter-spacing:1px;text-transform:uppercase}.tender-table td strong{color:#102b3d}.winner{color:#0d897d;font-weight:800}.amount{font-weight:800;white-space:nowrap;color:#102b3d}.tender-table td a{color:#0d897d;font-weight:700;text-decoration:underline;text-underline-offset:2px}.tender-note{margin-top:18px;color:#75848b;font-size:12px;line-height:1.7}.tender-empty{padding:35px;text-align:center;color:#71818a}
 .tender-cta{padding:75px 7%;background:#45d7c4;color:#071018}.tender-cta h2{font-size:clamp(38px,5vw,60px);max-width:800px}.tender-cta p{max-width:700px;line-height:1.8}.tender-cta .button{background:#071018;color:#fff}
 @media(max-width:700px){.tender-stats{grid-template-columns:1fr}}
 </style>
@@ -75,5 +75,5 @@ fetch('/data/tender-results.json?ts='+Date.now(),{cache:'no-store'})
 document.getElementById('search').addEventListener('input',render);
 document.getElementById('year').addEventListener('change',render);
 document.getElementById('source').addEventListener('change',render);
-</script>>>
+</script>
 </body></html>
