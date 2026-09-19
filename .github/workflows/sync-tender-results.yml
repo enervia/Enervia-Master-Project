@@ -1,0 +1,39 @@
+name: Sync Enervia Tender Results
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install parser dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Fetch and filter eTender results
+        run: python scripts/sync_tender_results.py
+
+      - name: Commit updated results
+        run: |
+          git config user.name "Enervia Tender Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/tender-results.json
+          if git diff --cached --quiet; then
+            echo "No new tender results."
+          else
+            git commit -m "Auto-sync Enervia tender results"
+            git push
+          fi
