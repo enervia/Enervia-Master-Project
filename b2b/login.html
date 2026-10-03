@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enervia | B2B Login</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+body{background:#07131b;color:#eef5f7}.login{max-width:430px;margin:12vh auto;padding:28px 22px}.box{background:#0d202a;border:1px solid #1c3945;border-radius:16px;padding:30px}.eyebrow{color:#45d7c4;letter-spacing:2px;font-size:11px;font-weight:700}.box h1{margin:10px 0}.muted{color:#91a4ad;line-height:1.5}label{display:block;margin:24px 0 8px;font-size:12px;color:#b7c6cc}input{width:100%;padding:13px;border:1px solid #34505c;border-radius:8px;background:#081922;color:white;box-sizing:border-box}button{margin-top:16px;width:100%;padding:13px;border:0;border-radius:8px;background:#45d7c4;color:#06141a;font-weight:700;cursor:pointer}.error{margin-top:14px;color:#ff8f8f;font-size:13px;min-height:18px}.back{display:inline-block;margin-top:20px;color:#45d7c4;text-decoration:none}
+</style></head><body><main class="login"><div class="box">
+<div class="eyebrow">ENERVIA B2B INFRASTRUCTURE</div><h1>Secure access</h1><p class="muted">This area is restricted to authorized Enervia users.</p>
+<form id="form"><label for="password">Admin password</label><input id="password" type="password" autocomplete="current-password" required><button>Sign in</button><div id="error" class="error"></div></form>
+<a class="back" href="../index.html">← Back to Enervia</a>
+</div></main><script>
+document.getElementById("form").addEventListener("submit",async e=>{e.preventDefault();const error=document.getElementById("error");error.textContent="";
+try{const r=await fetch("../api/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:document.getElementById("password").value})});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||"Login failed");location.href=new URLSearchParams(location.search).get("next")||"index.html"}catch(x){error.textContent=x.message}})
+</script></body></html>
