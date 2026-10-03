@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "status": ["NEW", "REVIEW", "SOURCING", "PRICING", "PENDING_APPROVAL", "QUOTED", "CLOSED"],
+  "fields": {
+    "rfqId": "string",
+    "submittedAt": "datetime",
+    "language": "az|en",
+    "company": "string",
+    "contactName": "string",
+    "email": "email",
+    "phone": "string",
+    "industry": "string",
+    "requirementType": "string",
+    "projectName": "string",
+    "deliveryLocation": "string",
+    "requiredBy": "date|null",
+    "currency": "AZN|USD|EUR|other",
+    "priority": "Normal|Urgent",
+    "details": "string",
+    "attachment": "object|null",
+    "items": [
+      {
+        "lineNo": "integer",
+        "description": "string",
+        "manufacturer": "string|null",
+        "model": "string|null",
+        "quantity": "number|null",
+        "unit": "string|null",
+        "technicalSpecification": "string|null",
+        "status": "NEW|SOURCING|PRICED|APPROVED|REJECTED",
+        "sourceUrl": "string|null",
+        "sourcePrice": "number|null",
+        "markupPercent": "number|null",
+        "sellingPrice": "number|null"
+      }
+    ]
+  }
+}
