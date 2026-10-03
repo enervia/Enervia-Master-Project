@@ -102,7 +102,7 @@ export default async function handler(req, res) {
     Math.random().toString(36).slice(2, 7).toUpperCase();
 
   const record = {
-    version: "1.0",
+    version: 2,
     rfqId,
     status: "NEW",
     submittedAt: n.toISOString(),
