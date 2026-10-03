@@ -1,6 +1,5 @@
 const COOKIE="enervia_admin";
 function b64decode(value){try{return JSON.parse(atob(value.replace(/-/g,"+").replace(/_/g,"/").padEnd(Math.ceil(value.length/4)*4,"=")))}catch{return null}}
-function hexToBytes(hex){const out=new Uint8Array(hex.length/2);for(let i=0;i<out.length;i++)out[i]=parseInt(hex.slice(i*2,i*2+2),16);return out}
 function base64urlToBytes(value){const b64=value.replace(/-/g,"+").replace(/_/g,"/").padEnd(Math.ceil(value.length/4)*4,"=");const raw=atob(b64);const out=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)out[i]=raw.charCodeAt(i);return out}
 async function validToken(token,secret){
  const parts=token.split(".");if(parts.length!==2)return false;
@@ -11,10 +10,11 @@ async function validToken(token,secret){
 export default async function middleware(req){
  const {pathname}=new URL(req.url);
  const login=pathname==="/b2b/login.html";
+ const loginApi=pathname==="/api/admin/login";
  const protectedPage=pathname.startsWith("/b2b/")||pathname.startsWith("/admin/");
  const protectedApi=pathname.startsWith("/api/admin/");
  if(!protectedPage&&!protectedApi)return;
- if(login)return;
+ if(login||loginApi)return;
  const cookie=req.headers.get("cookie")||"";
  const match=cookie.match(/(?:^|;\s*)enervia_admin=([^;]+)/);
  const secret=String(process.env.ADMIN_SESSION_SECRET||"");
