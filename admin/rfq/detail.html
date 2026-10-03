@@ -1,41 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Enervia | RFQ Detail</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#07131b;color:#eef5f7}
-.wrap{max-width:1280px;margin:0 auto;padding:32px 24px 60px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px}
-.back{color:#45d7c4;text-decoration:none}.muted{color:#91a4ad}.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}
-.card{background:#0d202a;border:1px solid #1c3945;border-radius:14px;padding:20px}
-h1{margin:0 0 6px;font-size:30px}h2{font-size:17px;margin:0 0 18px}
-.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.field{padding:12px;background:#091a23;border-radius:9px}
-.label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#7f969f;margin-bottom:5px}.value{font-size:14px}
-.status{display:inline-block;padding:7px 12px;border-radius:20px;background:#163d3d;color:#45d7c4;font-weight:700;font-size:12px}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid #1c3945;font-size:13px}th{color:#8da1aa;font-size:11px;text-transform:uppercase}
-.empty{padding:28px;text-align:center;color:#91a4ad}.note{margin-top:18px;padding:14px;border-left:3px solid #45d7c4;background:#091a23;color:#a9b9bf;font-size:13px;line-height:1.5}
-@media(max-width:850px){.grid{grid-template-columns:1fr}.meta{grid-template-columns:1fr 1fr}}
-</style>
-</head>
-<body><div class="wrap">
-<div class="top"><div><a class="back" href="index.html">← RFQ Inbox</a><h1 id="title">RFQ Detail</h1><div id="sub" class="muted">Loading RFQ...</div></div><span id="status" class="status">DEMO</span></div>
-<div class="grid">
-<section class="card"><h2>RFQ Information</h2><div class="meta" id="meta"></div></section>
-<section class="card"><h2>Workflow</h2><div class="meta">
-<div class="field"><div class="label">Current status</div><div class="value" id="wfStatus">—</div></div>
-<div class="field"><div class="label">Priority</div><div class="value" id="priority">—</div></div>
-<div class="field"><div class="label">Currency</div><div class="value" id="currency">—</div></div>
-</div><div class="note">Status changes, sourcing, pricing and approval actions will be connected after persistent RFQ storage and authentication are enabled.</div></section>
-</div>
-<section class="card" style="margin-top:18px"><h2>RFQ Items</h2><div class="empty">No persistent RFQ item data is available in the current demo mode.</div></section>
-</div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enervia | RFQ Detail</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#07131b;color:#eef5f7}.wrap{max-width:1280px;margin:auto;padding:32px 24px 60px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:28px}.back{color:#45d7c4;text-decoration:none}.muted{color:#91a4ad}.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}.card{background:#0d202a;border:1px solid #1c3945;border-radius:14px;padding:20px;margin-top:18px}h1{margin:6px 0;font-size:30px}h2{font-size:17px;margin:0 0 18px}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.field{padding:12px;background:#091a23;border-radius:9px}.label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#7f969f;margin-bottom:5px}.value{font-size:14px;word-break:break-word}.status{display:inline-block;padding:8px 12px;border-radius:20px;background:#163d3d;color:#45d7c4;font-weight:700;font-size:12px}select,button{padding:10px 12px;border-radius:8px;border:1px solid #34505c;background:#081922;color:#eef5f7}button{background:#45d7c4;color:#06141a;border:0;font-weight:700;cursor:pointer}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid #1c3945;font-size:13px}th{color:#8da1aa;font-size:11px;text-transform:uppercase}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.msg{margin-top:12px;color:#ff9b9b;min-height:18px}.empty{padding:25px;text-align:center;color:#91a4ad}@media(max-width:850px){.grid{grid-template-columns:1fr}.meta{grid-template-columns:1fr 1fr}}</style></head><body><div class="wrap">
+<div class="top"><div><a class="back" href="index.html">← RFQ Inbox</a><h1 id="title">RFQ Detail</h1><div id="sub" class="muted">Loading...</div></div><span id="status" class="status">—</span></div>
+<div class="grid"><section class="card"><h2>RFQ Information</h2><div class="meta" id="meta"></div></section>
+<section class="card"><h2>Workflow</h2><div class="field"><div class="label">Change status</div><div class="actions"><select id="statusSelect"><option>NEW</option><option>REVIEW</option><option>SOURCING</option><option>PRICING</option><option>PENDING_APPROVAL</option><option>QUOTED</option><option>CLOSED</option></select><button id="save">Update</button></div><div id="msg" class="msg"></div></div></section></div>
+<section class="card"><h2>RFQ Items</h2><div id="items" class="empty">Loading items...</div></section></div>
 <script>
-const id=new URLSearchParams(location.search).get('id');
-document.getElementById('title').textContent=id?('RFQ '+id):'RFQ Detail';
-document.getElementById('sub').textContent=id?'Procurement workflow detail':'Select an RFQ from the inbox';
-document.getElementById('meta').innerHTML=[
-['RFQ ID',id||'—'],['Company','—'],['Contact','—'],['Project','—'],['Delivery location','—'],['Required by','—']
-].map(x=>'<div class="field"><div class="label">'+x[0]+'</div><div class="value">'+x[1]+'</div></div>').join('');
-</script>
-</body></html>
+const id=new URLSearchParams(location.search).get("id"),esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+function field(l,v){return '<div class="field"><div class="label">'+l+'</div><div class="value">'+esc(v||"—")+"</div></div>"}
+async function load(){if(!id){document.getElementById("sub").textContent="Missing RFQ ID";return}const r=await fetch("/api/admin/rfq?id="+encodeURIComponent(id));const d=await r.json();if(!r.ok||!d.ok){document.getElementById("sub").textContent=d.error||"Unable to load RFQ";return}const x=d.rfq;document.getElementById("title").textContent="RFQ "+x.rfq_id;document.getElementById("sub").textContent=(x.company||"")+" · "+new Date(x.submitted_at).toLocaleString();document.getElementById("status").textContent=x.status;document.getElementById("statusSelect").value=x.status;document.getElementById("meta").innerHTML=[["RFQ ID",x.rfq_id],["Company",x.company],["Contact",x.contact_name],["Email",x.email],["Phone",x.phone],["Industry",x.industry],["Requirement",x.requirement_type],["Project",x.project_name],["Delivery",x.delivery_location],["Required by",x.required_by],["Currency",x.currency],["Priority",x.priority],["Details",x.details]].map(a=>field(a[0],a[1])).join("");const items=x.items||[];document.getElementById("items").innerHTML=items.length?'<table><thead><tr><th>Line</th><th>Description</th><th>Manufacturer</th><th>Model</th><th>Qty</th><th>Unit</th><th>Source</th><th>Sell Price</th><th>Status</th></tr></thead><tbody>'+items.map(i=>'<tr><td>'+esc(i.line_no)+'</td><td>'+esc(i.description)+'</td><td>'+esc(i.manufacturer)+'</td><td>'+esc(i.model)+'</td><td>'+esc(i.quantity)+'</td><td>'+esc(i.unit)+'</td><td>'+esc(i.source_url)+'</td><td>'+esc(i.selling_price)+'</td><td>'+esc(i.status)+'</td></tr>').join("")+'</tbody></table>':'<div class="empty">No item lines yet.</div>'}
+document.getElementById("save").onclick=async()=>{const msg=document.getElementById("msg");msg.textContent="";const status=document.getElementById("statusSelect").value;const r=await fetch("/api/admin/rfq-status",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({rfqId:id,status,changedBy:"admin"})});const d=await r.json();if(!r.ok||!d.ok){msg.textContent=d.error||"Update failed";return}msg.style.color="#45d7c4";msg.textContent="Status updated.";await load()};load();
+</script></body></html>
