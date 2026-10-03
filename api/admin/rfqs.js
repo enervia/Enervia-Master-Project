@@ -1,7 +1,13 @@
-const DEMO_MODE = true;
-const demoRfqs = [];
+import { listRfqs } from "../../lib/supabase.js";
+
 export default async function handler(req,res){
   if(req.method!=="GET") return res.status(405).json({ok:false,error:"Method not allowed"});
-  if(DEMO_MODE) return res.status(200).json({ok:true,rfqs:demoRfqs});
-  return res.status(401).json({ok:false,error:"Admin authentication is not configured yet."});
+  try {
+    const status=String(req.query?.status||"").trim();
+    const rfqs=await listRfqs(status);
+    return res.status(200).json({ok:true,rfqs});
+  } catch(e) {
+    console.error("RFQ list error",e);
+    return res.status(500).json({ok:false,error:"Unable to load RFQs."});
+  }
 }
