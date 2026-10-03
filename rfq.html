@@ -6,7 +6,7 @@
 <section class="detail-section"><div class="rfq-wrap">
 <div class="rfq-points"><div><strong>01 · Technical review</strong><span>Specification, quantity and standard review.</span></div><div><strong>02 · Sourcing</strong><span>Manufacturer and suitable model identification.</span></div><div><strong>03 · Commercial offer</strong><span>Pricing and lead time based on confirmed scope.</span></div></div>
 <div class="success" id="success" role="status" aria-live="polite"></div><div class="rfq-context" id="rfqContext" style="display:none"></div>
-<form class="rfq-form" id="rfqForm">
+<form class="rfq-form" id="rfqForm"><input type="hidden" name="language" value="en">
 <div class="form-grid"><div style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden"><label>Website</label><input name="website" tabindex="-1" autocomplete="off"></div>
 <div class="field"><label>Company *</label><input required name="company" placeholder="Company name"></div>
 <div class="field"><label>Contact person *</label><input required name="name" placeholder="Full name"></div>
@@ -14,6 +14,11 @@
 <div class="field"><label>Phone</label><input name="phone" placeholder="+994"></div>
 <div class="field"><label>Industry</label><select name="industry"><option>Oil & Gas</option><option>Energy</option><option>Industrial & Construction</option><option>Chemical & Petrochemical</option><option>Mining</option><option>Railway</option><option>Marine</option><option>Water & Infrastructure</option><option>Other</option></select></div>
 <div class="field"><label>Requirement type</label><select name="type"><option>Product supply</option><option>Technical alternative</option><option>BOQ sourcing</option><option>Project supply</option><option>Other</option></select></div>
+<div class="field"><label>Project name</label><input name="projectName" placeholder="Project / tender name"></div>
+<div class="field"><label>Delivery location</label><input name="deliveryLocation" placeholder="Baku, Azerbaijan"></div>
+<div class="field"><label>Required by</label><input type="date" name="requiredBy"></div>
+<div class="field"><label>Currency</label><select name="currency"><option>AZN</option><option>USD</option><option>EUR</option><option>Other</option></select></div>
+<div class="field"><label>Priority</label><select name="priority"><option>Normal</option><option>Urgent</option></select></div>
 <div class="field full"><label>Requirement / specification *</label><textarea required name="details" placeholder="Describe the product, manufacturer/model, quantity, technical specification, project or delivery requirement..."></textarea></div>
 <div class="field full"><label>Attachment</label><input type="file" name="file" accept=".pdf,.xlsx,.xls,.doc,.docx,.jpg,.jpeg,.png"></div>
 </div>
