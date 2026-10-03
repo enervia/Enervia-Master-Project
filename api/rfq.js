@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import formidable from "formidable";
 import fs from "fs";
+import { insertRfq } from "../lib/supabase.js";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ALLOWED_EXT = new Set(["pdf", "xlsx", "xls", "docx", "doc", "jpg", "jpeg", "png"]);
@@ -120,6 +121,16 @@ export default async function handler(req, res) {
     details,
     attachment: attachment ? { filename: attachment.filename } : null
   };
+
+  try {
+    await insertRfq(record);
+  } catch (e) {
+    console.error("RFQ database error", e);
+    if (attachment?.path) {
+      try { fs.unlinkSync(attachment.path); } catch {}
+    }
+    return res.status(500).json({ ok: false, error: "The RFQ could not be saved. Please try again." });
+  }
 
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || "mail.privateemail.com",
