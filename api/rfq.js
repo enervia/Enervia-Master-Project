@@ -80,6 +80,10 @@ export default async function handler(req, res) {
   const name = clean(fields.name, 200);
   const email = clean(fields.email, 320);
   const phone = clean(fields.phone, 100);
+  const finalCompany = customerContext?.company?.legal_name || company;
+  const finalName = customerContext?.profile?.full_name || name;
+  const finalEmail = customerContext?.user?.email || email;
+  const finalPhone = customerContext?.profile?.phone || phone;
   const industry = clean(fields.industry, 120);
   const type = clean(fields.type, 120);
   const projectName = clean(fields.projectName, 250);
@@ -89,7 +93,7 @@ export default async function handler(req, res) {
   const priority = clean(fields.priority, 30) || "Normal";
   const details = clean(fields.details, 12000);
 
-  if (!company || !name || !details || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!finalCompany || !finalName || !details || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(finalEmail)) {
     return res.status(400).json({ ok: false, error: "Please complete the required fields." });
   }
 
@@ -110,11 +114,6 @@ export default async function handler(req, res) {
   const n = new Date();
   const rfqId = "EN-" + n.toISOString().slice(0, 10).replace(/-/g, "") + "-" +
     Math.random().toString(36).slice(2, 7).toUpperCase();
-
-  const finalCompany = customerContext?.company?.legal_name || company;
-  const finalName = customerContext?.profile?.full_name || name;
-  const finalEmail = customerContext?.user?.email || email;
-  const finalPhone = customerContext?.profile?.phone || phone;
 
   const record = {
     version: 2,
@@ -168,10 +167,10 @@ export default async function handler(req, res) {
     "Language: " + language,
     "",
     "COMPANY",
-    "Company: " + company,
-    "Contact: " + name,
-    "Email: " + email,
-    "Phone: " + phone,
+    "Company: " + finalCompany,
+    "Contact: " + finalName,
+    "Email: " + finalEmail,
+    "Phone: " + finalPhone,
     "Industry: " + industry,
     "Requirement type: " + type,
     "Project: " + (projectName || "Not specified"),
@@ -190,8 +189,8 @@ export default async function handler(req, res) {
     await transporter.sendMail({
       from: `"Enervia RFQ" <${process.env.SMTP_USER}>`,
       to: process.env.RFQ_TO || "sales@enervia.az",
-      replyTo: email,
-      subject: `RFQ ${rfqId} | ${company}`,
+      replyTo: finalEmail,
+      subject: `RFQ ${rfqId} | ${finalCompany}`,
       text: body,
       attachments: attachment ? [attachment] : []
     });
