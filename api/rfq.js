@@ -28,13 +28,23 @@ export default async function handler(req, res) {
   const allowedOrigins = new Set(["https://enervia.az", "https://www.enervia.az"]);
   if (allowedOrigins.has(origin)) res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "false");
   res.setHeader("Vary", "Origin");
 
   if (req.method === "OPTIONS") return res.status(204).end();
   if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Method not allowed" });
   if (origin && !allowedOrigins.has(origin)) return res.status(403).json({ ok: false, error: "Forbidden origin" });
+
+  let customerContext = null;
+  try {
+    const { getCustomerContext } = await import("../lib/customer-auth.js");
+    customerContext = await getCustomerContext(req);
+    if (customerContext?.inactive) return res.status(403).json({ ok: false, error: "Your customer account is awaiting approval." });
+  } catch (e) {
+    console.error("Customer auth lookup error", e);
+    return res.status(500).json({ ok: false, error: "Unable to verify customer account." });
+  }
 
   const ip = String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "unknown").split(",")[0].trim();
   const now = Date.now();
@@ -101,16 +111,23 @@ export default async function handler(req, res) {
   const rfqId = "EN-" + n.toISOString().slice(0, 10).replace(/-/g, "") + "-" +
     Math.random().toString(36).slice(2, 7).toUpperCase();
 
+  const finalCompany = customerContext?.company?.legal_name || company;
+  const finalName = customerContext?.profile?.full_name || name;
+  const finalEmail = customerContext?.user?.email || email;
+  const finalPhone = customerContext?.profile?.phone || phone;
+
   const record = {
     version: 2,
     rfqId,
     status: "NEW",
     submittedAt: n.toISOString(),
     language,
-    company,
-    contactName: name,
-    email,
-    phone,
+    company: finalCompany,
+    contactName: finalName,
+    email: finalEmail,
+    phone: finalPhone,
+    customerCompanyId: customerContext?.company?.id || null,
+    createdByUserId: customerContext?.user?.id || null,
     industry,
     requirementType: type,
     projectName,
