@@ -11,6 +11,7 @@ export default async function handler(req,res){
   const base=String(process.env.SUPABASE_URL||"").replace(/\/$/,""),key=String(process.env.SUPABASE_SERVICE_ROLE_KEY||"");
   const rows=await requestCustomerData(base+"/rest/v1/quotations?id=eq."+encodeURIComponent(quotationId)+"&customer_company_id=eq."+encodeURIComponent(ctx.company.id)+"&limit=1",{base,key});
   const q=rows?.[0];if(!q)return res.status(404).json({ok:false,error:"Quotation not found."});
+  if(q.status!=="SENT")return res.status(400).json({ok:false,error:"Only sent quotations can be accepted or ignored."});
   const status=decision==="ACCEPT"?"ACCEPTED":"IGNORED";
   const now=new Date().toISOString();
   const updated=await requestCustomerData(base+"/rest/v1/quotations?id=eq."+encodeURIComponent(quotationId),{base,key,method:"PATCH",body:JSON.stringify({status,customer_decision_note:String(note||"").slice(0,2000),decided_at:now,updated_at:now})});
