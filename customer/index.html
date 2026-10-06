@@ -16,7 +16,7 @@ body{font-family:Arial;margin:0;background:#f5f7fa;color:#172033}
 .notice{margin-top:14px;padding:12px 14px;border-radius:9px;background:#f1f7f7;color:#36545b}
 .item,.quote{padding:12px 0;border-bottom:1px solid #edf0f2}
 .actions{display:flex;gap:8px;margin-top:10px}
-.error{color:#b42318}
+.error{color:#b42318}.status{display:inline-block;padding:4px 9px;border-radius:999px;background:#eef2f6;font-size:12px;font-weight:700;margin-left:6px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input{width:100%;box-sizing:border-box;padding:10px;border:1px solid #d9dee5;border-radius:8px}.profile-actions{margin-top:14px}@media(max-width:800px){.form-grid{grid-template-columns:1fr}}
 .modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center}
 .modal>div{background:#fff;padding:24px;border-radius:12px;max-width:430px;width:90%}
 select,textarea{width:100%;box-sizing:border-box;padding:10px;margin:7px 0 12px}
@@ -32,7 +32,7 @@ select,textarea{width:100%;box-sizing:border-box;padding:10px;margin:7px 0 12px}
 <a id="newRfq" class="btn" href="new-rfq.html">+ Submit New RFQ</a>
 <div id="pendingNotice" class="notice" style="display:none"></div>
 </section>
-<div class="grid">
+<div class="grid"><section class="card"><h2>Customer Profile</h2><div class="form-grid"><div class="field"><label>Full Name</label><input id="pFullName"></div><div class="field"><label>Email</label><input id="pEmail" type="email" disabled></div><div class="field"><label>Phone</label><input id="pPhone"></div><div class="field"><label>Company Legal Name</label><input id="pLegalName"></div><div class="field"><label>Tax ID / VÖEN</label><input id="pTaxId"></div><div class="field"><label>Industry</label><input id="pIndustry"></div><div class="field"><label>City</label><input id="pCity"></div><div class="field"><label>Website</label><input id="pWebsite"></div><div class="field" style="grid-column:1/-1"><label>Address</label><input id="pAddress"></div></div><div class="profile-actions"><button class="btn" id="saveProfile">Save Profile</button> <span id="profileMsg"></span></div></section>
 <section class="card"><h2>My RFQs</h2><div id="rfqs">Loading...</div></section>
 <section class="card"><h2>Quotations</h2><div id="quotes">Loading...</div></section>
 </div>
@@ -78,7 +78,7 @@ async function load(){
   $("pendingNotice").style.display="none";
   $("newRfq").classList.remove("disabled");
   $("welcome").textContent="Welcome, "+(me.profile?.full_name||"Customer");
-  $("company").textContent=(me.company?.legal_name||"")+" · "+(me.company?.industry||"Customer");
+  $("company").textContent=(me.company?.legal_name||"")+" · "+(me.company?.industry||"Customer")+" · Account status: "+(me.company?.status||"PENDING");$("pFullName").value=me.profile?.full_name||"";$("pEmail").value=me.user?.email||"";$("pPhone").value=me.profile?.phone||me.company?.phone||"";$("pLegalName").value=me.company?.legal_name||"";$("pTaxId").value=me.company?.tax_id||"";$("pIndustry").value=me.company?.industry||"";$("pCity").value=me.company?.city||"";$("pWebsite").value=me.company?.website||"";$("pAddress").value=me.company?.address||"";
   const d=await api("/api/customer/rfqs");
   $("rfqs").innerHTML=d.rfqs?.length?d.rfqs.map(x=>'<div class="item"><strong>'+esc(x.rfq_id)+'</strong> · '+esc(x.status)+'<br><small>'+esc(x.project_name||"No project")+' · '+(x.submitted_at?new Date(x.submitted_at).toLocaleString():"")+'</small></div>').join(""):"No RFQs yet.";
   $("quotes").innerHTML=d.quotations?.length?d.quotations.map(q=>'<div class="quote"><strong>'+esc(q.quote_no)+'</strong> · '+esc(q.status)+'<br>RFQ '+esc(q.rfq_id)+' · '+esc(q.currency||"")+' '+esc(q.grand_total||"")+(q.status==="SENT"?'<div class="actions"><button class="btn" onclick="acceptQuote(\''+q.id+'\')">Accept</button><button class="btn" style="background:#172033;color:#fff" onclick="ignoreQuote(\''+q.id+'\')">Ignore</button></div>':"")+'</div>').join(""):"No quotations yet.";
@@ -97,7 +97,7 @@ $("confirm").onclick=async()=>{
  if(!$("reason").value){alert("Select a reason");return}
  try{const d=await api("/api/customer/quotation-decision",{method:"POST",body:JSON.stringify({quotationId:qid,decision:"IGNORE",reason:$("reason").value,note:$("note").value})});if(!d?.ok)throw new Error(d?.error||"Unable to save decision");$("modal").style.display="none";$("reason").value="";$("note").value="";load()}catch(e){alert(e.message)}
 };
-$("logout").onclick=async()=>{await sb.auth.signOut();location.href="login.html"};
+$("saveProfile").onclick=async()=>{const msg=$("profileMsg");msg.textContent="Saving...";try{await api("/api/customer/profile",{method:"PATCH",body:JSON.stringify({fullName:$("pFullName").value,phone:$("pPhone").value,legalName:$("pLegalName").value,taxId:$("pTaxId").value,industry:$("pIndustry").value,city:$("pCity").value,website:$("pWebsite").value,address:$("pAddress").value})});msg.textContent="Profile updated successfully.";load()}catch(e){msg.textContent=e.message;msg.className="error"}};\n$("logout").onclick=async()=>{await sb.auth.signOut();location.href="login.html"};
 load();
 </script>
 </body>
