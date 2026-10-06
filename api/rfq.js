@@ -40,6 +40,7 @@ export default async function handler(req, res) {
   try {
     const { getCustomerContext } = await import("../lib/customer-auth.js");
     customerContext = await getCustomerContext(req);
+    if (req.headers.authorization && !customerContext) return res.status(403).json({ ok: false, error: "Your registration is incomplete. Please contact Enervia to complete your company profile." });
     if (customerContext?.inactive) return res.status(403).json({ ok: false, error: "Your customer account is awaiting approval." });
   } catch (e) {
     console.error("Customer auth lookup error", e);
@@ -197,7 +198,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true, rfqId, status: record.status });
   } catch (e) {
     console.error("RFQ mail error", e);
-    return res.status(500).json({ ok: false, error: "We could not send the RFQ right now. Please try again or email sales@enervia.az." });
+    return res.status(200).json({ ok: true, rfqId, status: record.status, warning: "RFQ saved successfully, but email notification failed. Our team can see your request in RFQ Inbox." });
   } finally {
     if (attachment?.path) {
       try { fs.unlinkSync(attachment.path); } catch {}
