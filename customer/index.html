@@ -84,7 +84,7 @@ async function load(){
   $("quotes").innerHTML=d.quotations?.length?d.quotations.map(q=>'<div class="quote"><strong>'+esc(q.quote_no)+'</strong> · '+esc(q.status)+'<br>RFQ '+esc(q.rfq_id)+' · '+esc(q.currency||"")+' '+esc(q.grand_total||"")+(q.status==="SENT"?'<div class="actions"><button class="btn" onclick="acceptQuote(\''+q.id+'\')">Accept</button><button class="btn" style="background:#172033;color:#fff" onclick="ignoreQuote(\''+q.id+'\')">Ignore</button></div>':"")+'</div>').join(""):"No quotations yet.";
  }catch(e){
   console.error(e);
-  $("rfqs").innerHTML="<div class='error'>Unable to load RFQs. Please refresh the page.</div>";
+  $("rfqs").innerHTML="<div class='error'>Unable to load your profile. If you registered but your company is missing, <a href=\"complete-registration.html\">complete company registration here</a>.</div>";
   $("quotes").innerHTML="<div class='error'>Unable to load quotations. Please refresh the page.</div>";
  }
 }
