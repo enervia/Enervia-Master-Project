@@ -60,10 +60,10 @@ function render(){
   // Statistics follow the currently filtered rows (year, source and search).
   document.getElementById('count').textContent=rows.length;
   document.getElementById('updated').textContent=rows.length?rows.slice().sort(function(a,b){
-    const parse=function(v){const m=String(getDate(v)).match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})/);return m?new Date(+m[3],+m[2]-1,+m[1]).getTime():0;};
+    const parse=function(v){const m=String(getDate(v)).match(/^(\d{2})\\.(\d{2})\\.(\d{4})/);return m?new Date(+m[3],+m[2]-1,+m[1]).getTime():0;};
     return parse(b)-parse(a);
   })[0] && getDate(rows.slice().sort(function(a,b){
-    const parse=function(v){const m=String(getDate(v)).match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})/);return m?new Date(+m[3],+m[2]-1,+m[1]).getTime():0;};
+    const parse=function(v){const m=String(getDate(v)).match(/^(\d{2})\\.(\d{2})\\.(\d{4})/);return m?new Date(+m[3],+m[2]-1,+m[1]).getTime():0;};
     return parse(b)-parse(a);
   })[0]):'—';
   const filteredTotal=rows.reduce(function(sum,x){
