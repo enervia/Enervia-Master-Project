@@ -1,6 +1,10 @@
 name: Sync Enervia Tender Results
 
 on:
+  push:
+    paths:
+      - 'scripts/sync_tender_results.py'
+      - '.github/workflows/sync-tender-results.yml'
   workflow_dispatch:
   schedule:
     - cron: "0 */6 * * *"
@@ -11,6 +15,7 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
