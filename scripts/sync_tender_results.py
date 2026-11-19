@@ -34,7 +34,7 @@ ALIASES = {
 def clean(value):
     if value is None or isinstance(value, (dict, list)):
         return ""
-    return re.sub(r"\\s+", " ", str(value)).strip()
+    return re.sub(r"\s+", " ", str(value)).strip()
 
 
 def norm_key(key):
