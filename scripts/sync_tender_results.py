@@ -26,8 +26,8 @@ ALIASES = {
     "buyer": ["buyerOrganizationName", "buyerName", "organizationName", "procuringEntityName", "buyer", "customerName"],
     "subject": ["eventName", "eventTitle", "procurementSubject", "procurementName", "subject", "title", "name"],
     "winner": ["awardedParticipantName", "winnerName", "winner", "awardedParticipant"],
-    "amount": ["awardedPrice", "awardAmount", "contractAmount", "awardedAmount", "totalAmount", "price", "value", "suggestedPrice"],
-    "date": ["awardDate", "awardedDate", "resultDate", "publishDate", "eventDate", "date"],
+    "amount": ["awardedOrganizationPrice", "awardedPrice", "awardAmount", "contractAmount", "awardedAmount", "totalAmount", "price", "value", "suggestedPrice"],
+    "date": ["finishDate", "awardDate", "awardedDate", "resultDate", "publishDate", "eventDate", "date"],
 }
 
 
@@ -104,8 +104,15 @@ def parse():
     found = {}
     scanned = 0
 
+    successful_types = 0
     for event_type in EVENT_TYPES:
-        first = request_page(session, event_type, 1)
+        try:
+            first = request_page(session, event_type, 1)
+        except Exception as exc:
+            print(f"[WARN] Skipping EventType={event_type}; request failed: {exc}", flush=True)
+            continue
+
+        successful_types += 1
         total_pages = max(1, int(first.get("totalPages") or 1))
         print(
             f"[INFO] EventType={event_type}: {first.get('totalItems', '?')} records, {total_pages} pages",
@@ -113,7 +120,12 @@ def parse():
         )
 
         for page in range(1, total_pages + 1):
-            data = first if page == 1 else request_page(session, event_type, page)
+            try:
+                data = first if page == 1 else request_page(session, event_type, page)
+            except Exception as exc:
+                print(f"[WARN] EventType={event_type} page={page} failed: {exc}", flush=True)
+                continue
+
             items = data.get("items", [])
             scanned += len(items)
 
@@ -134,7 +146,7 @@ def parse():
 
                 event_id = clean(item.get("eventId") or item.get("id"))
                 detail_url = (
-                    f"https://etender.gov.az/main/competition/detail/{quote(event_id)}"
+                    f"https://etender.gov.az/main/competitions/{event_id}"
                     if event_id else SOURCE_URL
                 )
                 row = {
@@ -156,6 +168,9 @@ def parse():
                 flush=True,
             )
             time.sleep(0.15)
+
+    if successful_types == 0:
+        raise RuntimeError("Could not retrieve any eTender event type; no data was changed.")
 
     print(
         f"[INFO] Scanned {scanned} event records; found {len(found)} Enervia award records.",
