@@ -1,5 +1,45 @@
 [
   {
+    "eventId": 360676,
+    "buyer": "\"BALAKƏN RAYON MƏRKƏZİ XƏSTƏXANASI\" PHŞ",
+    "subject": "IT mallarının satınalınması",
+    "winner": "\"ENERVIA\" MMC",
+    "amount": "8,590.40 AZN",
+    "date": "17.11.2026 16:49",
+    "source": "eTender",
+    "sourceUrl": "https://etender.gov.az/main/competitions/360676"
+  },
+  {
+    "eventId": 359771,
+    "buyer": "\"BALAKƏN RAYON MƏRKƏZİ XƏSTƏXANASI\" PHŞ",
+    "subject": "Digər malların satınalınması",
+    "winner": "\"ENERVIA\" MMC",
+    "amount": "1,420.72 AZN",
+    "date": "16.11.2026 07:39",
+    "source": "eTender",
+    "sourceUrl": "https://etender.gov.az/main/competitions/359771"
+  },
+  {
+    "eventId": 360265,
+    "buyer": "Şuşa şəhəri Dövlət Qoruğu İdarəsi",
+    "subject": "Təsərrüfat mallarının satınalınması (Əlavə)",
+    "winner": "\"ENERVIA\" MMC",
+    "amount": "25,480.04 AZN",
+    "date": "11.11.2026 18:36",
+    "source": "eTender",
+    "sourceUrl": "https://etender.gov.az/main/competitions/360265"
+  },
+  {
+    "eventId": 358900,
+    "buyer": "BALAKƏN RAYONU İCRA HAKİMİYYƏTİ",
+    "subject": "Balakən şəhər küçələrinin abadlaşdırılması üçün mal-materiallarının satın alınması",
+    "winner": "\"ENERVIA\" Məhdud Məsuliyyətli Cəmiyyəti",
+    "amount": "6,720.10 AZN",
+    "date": "06.11.2026 18:11",
+    "source": "eTender",
+    "sourceUrl": "https://etender.gov.az/main/competitions/358900"
+  },
+  {
     "buyer": "GÖYÇAY SU MELİORASİYA SİSTEMLƏRİNİN İSTİSMARI İDARƏSİ",
     "subject": "Subartezian quyularının cari təmiri üçün materialların satın alınması",
     "winner": "ENERVIA Məhdud Məsuliyyətli Cəmiyyəti",
