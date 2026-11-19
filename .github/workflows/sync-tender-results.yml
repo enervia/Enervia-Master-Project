@@ -3,7 +3,7 @@ name: Sync Enervia Tender Results
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 5 * * *"
+    - cron: "0 */6 * * *"
 
 permissions:
   contents: write
