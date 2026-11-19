@@ -14,7 +14,7 @@ API_URLS = [
 ]
 SOURCE_URL = "https://etender.gov.az/main/competitions"
 OUT = Path("data/tender-results.json")
-EVENT_TYPES = (2, 4)
+EVENT_TYPES = (2, 4, 7)  # Open tender, quotation request, and the additional open-tender result type observed in API
 PAGE_SIZE = 100
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0 Safari/537.36",
