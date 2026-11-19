@@ -1,1 +1,88 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enervia Customer Registration</title><style>body{font-family:Arial;background:#07131b;color:#fff;margin:0}.box{max-width:600px;margin:50px auto;padding:28px;background:#0d202a;border-radius:14px}input{width:100%;padding:11px;box-sizing:border-box;margin:6px 0 12px}button{padding:12px 18px;background:#45d7c4;border:0;border-radius:8px;font-weight:700}</style></head><body><main class="box"><h1>Customer Registration</h1><p>Register your company for Enervia Customer Portal access.</p><label>Full Name</label><input id="fullName"><label>Email</label><input id="email" type="email"><label>Password</label><input id="password" type="password"><label>Company Legal Name</label><input id="legalName"><label>Tax ID / VÖEN</label><input id="taxId"><label>Phone</label><input id="phone"><label>Industry</label><input id="industry"><label>City</label><input id="city" value="Baku"><label>Address</label><input id="address"><button id="go">Create Account</button><p id="msg"></p><a href="login.html">Back to login</a></main><script>document.getElementById("go").onclick=async()=>{const body={fullName:fullName.value,email:email.value,password:password.value,phone:phone.value,company:{legalName:legalName.value,taxId:taxId.value,industry:industry.value,city:city.value,address:address.value}};const r=await fetch("/api/customer/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const d=await r.json();msg.textContent=r.ok&&d.ok?"Account created. Check email if confirmation is required; then sign in.":d.error||"Registration failed."};</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enervia Customer Registration</title>
+<style>
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:#07131b;color:#fff;margin:0}.box{max-width:600px;margin:50px auto;padding:28px;background:#0d202a;border-radius:14px}h1{font-size:28px}label{display:block;margin-top:10px}input{display:block;width:100%;padding:11px;margin:6px 0 10px;border:1px solid #ccd3d8;border-radius:2px;font:inherit}button{padding:12px 18px;background:#45d7c4;border:0;border-radius:8px;font-weight:700;cursor:pointer}button:disabled{opacity:.6;cursor:wait}#msg{white-space:pre-wrap;line-height:1.45;margin-top:14px}.error{color:#ff9b9b}.success{color:#75e5c4}a{color:#a98bff}
+@media(max-width:640px){.box{margin:16px;padding:20px;border-radius:10px}}
+</style>
+</head>
+<body>
+<main class="box">
+<h1>Customer Registration</h1>
+<p>Register your company for Enervia Customer Portal access.</p>
+<form id="registerForm">
+<label for="fullName">Full Name</label><input id="fullName" name="fullName" autocomplete="name" required>
+<label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required>
+<label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+<label for="legalName">Company Legal Name</label><input id="legalName" name="legalName" required>
+<label for="taxId">Tax ID / VÖEN</label><input id="taxId" name="taxId" inputmode="numeric">
+<label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel">
+<label for="industry">Industry</label><input id="industry" name="industry">
+<label for="city">City</label><input id="city" name="city" value="Baku">
+<label for="address">Address</label><input id="address" name="address" autocomplete="street-address">
+<button id="go" type="submit">Create Account</button>
+</form>
+<p id="msg" role="status" aria-live="polite"></p>
+<a href="login.html">Back to login</a>
+</main>
+<script>
+(function(){
+ const form=document.getElementById("registerForm");
+ const button=document.getElementById("go");
+ const message=document.getElementById("msg");
+ const value=id=>document.getElementById(id).value.trim();
+ form.addEventListener("submit",async function(event){
+  event.preventDefault();
+  message.className="";
+  message.textContent="";
+  if(!form.reportValidity())return;
+  if(value("password").length<8){message.className="error";message.textContent="Password must contain at least 8 characters.";return;}
+  const body={
+   fullName:value("fullName"),
+   email:value("email"),
+   password:document.getElementById("password").value,
+   phone:value("phone"),
+   company:{
+    legalName:value("legalName"),
+    taxId:value("taxId"),
+    industry:value("industry"),
+    city:value("city"),
+    address:value("address")
+   }
+  };
+  button.disabled=true;
+  button.textContent="Creating account...";
+  message.textContent="Please wait. Your registration is being submitted.";
+  try{
+   const response=await fetch("/api/customer/register",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Accept":"application/json"},
+    body:JSON.stringify(body)
+   });
+   const raw=await response.text();
+   let data={};
+   try{data=raw?JSON.parse(raw):{};}catch(e){throw new Error("Server returned an invalid response (HTTP "+response.status+"). Please try again or contact Enervia support.");}
+   if(!response.ok||!data.ok){
+    throw new Error(data.error||data.message||("Registration failed (HTTP "+response.status+")."));
+   }
+   message.className="success";
+   message.textContent=data.needsEmailConfirmation
+    ?"Your account and company registration were created. Please check your email to confirm the account, then sign in."
+    :"Your account and company registration were created successfully. You can now sign in.";
+   form.reset();
+  }catch(error){
+   console.error("Customer registration failed:",error);
+   message.className="error";
+   message.textContent=error.message||"Could not connect to the registration service. Please check your internet connection and try again.";
+  }finally{
+   button.disabled=false;
+   button.textContent="Create Account";
+  }
+ });
+})();
+</script>
+</body>
+</html>
