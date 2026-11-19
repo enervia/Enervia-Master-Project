@@ -44,7 +44,7 @@ def pick(obj,aliases):
  return ""
 
 def request_page(session,event_type,page):
- params={"EventType":event_type,"PageSize":PAGE_SIZE,"PageNumber":page,"EventStatus":"","Keyword":"","buyerOrganizationName":"","PrivateRfxId":"","publishDateFrom":"","publishDateTo":"","AwardedparticipantName":"","AwardedparticipantVoen":"","DocumentViewType":""}
+ params={"EventType":event_type,"PageSize":PAGE_SIZE,"PageNumber":page,"EventStatus":1,"Keyword":"","buyerOrganizationName":"","PrivateRfxId":"","publishDateFrom":"","publishDateTo":"","AwardedparticipantName":"","AwardedparticipantVoen":"","DocumentViewType":""}
  last_error=None
  for attempt in range(3):
   try:
